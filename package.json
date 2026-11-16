@@ -1,0 +1,12 @@
+{
+  "name": "neuraforge-news-widget",
+  "version": "1.0.0",
+  "description": "Widget de noticias Web3 automatizado para NeuraForge AI",
+  "main": "actualizar.js",
+  "scripts": {
+    "update": "node actualizar.js"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
+}
