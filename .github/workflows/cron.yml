@@ -1,21 +1,34 @@
 name: Actualizar Noticias Web3
+
 on:
   schedule:
-    - cron: "0 */4 * * *"
+    - cron: '0 */4 * * *'
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: "20"
-      - env:
+          node-version: '20'
+
+      - name: Instalar y ejecutar
+        env:
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
-        run: npm install && node actualizar.js
-      - run: |
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          npm install
+          node actualizar.js
+
+      - name: Guardar cambios
+        run: |
           git config user.email "bot@botcaza.ai"
           git config user.name "NeuraForge Bot"
           git add noticias.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Actualizacion automatica" && git push)
